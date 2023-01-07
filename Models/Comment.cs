@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Blog23.Models
 {
@@ -33,5 +34,10 @@ namespace Blog23.Models
         [StringLength(500, ErrorMessage = "The {0} of the comment must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
         [Display(Name = "Moderated Comment")]
         public string ModeratedBody { get; set; }
+
+        //Navigation Properties
+        public virtual Post Post { get; set; }
+        public virtual IdentityUser Author { get; set; }
+        public virtual IdentityUser Moderator { get; set; }
     }
 }
