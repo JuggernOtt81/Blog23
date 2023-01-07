@@ -35,6 +35,8 @@ namespace Blog23.Models
         [Display(Name = "Moderated Comment")]
         public string ModeratedBody { get; set; }
 
+        public ModerationType ModerationType { get; set; }
+
         //Navigation Properties
         public virtual Post Post { get; set; }
         public virtual IdentityUser Author { get; set; }
