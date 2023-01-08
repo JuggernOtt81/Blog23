@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Blog23.Models
+namespace Blog23.Enums
 {
     public enum ModerationType
     {
