@@ -13,13 +13,16 @@ namespace Blog23.Models
 
         [Required]
         [StringLength(75, ErrorMessage = "The {0} of the post must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
+        [Display(Name = "Post Title: ")]
         public string Title { get; set; }
 
         [Required]
         [StringLength(200, ErrorMessage = "The {0} of the post must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
+        [Display(Name = "Post Abstract: ")]
         public string Abstract { get; set; }
 
         [Required]
+        [Display(Name = "Post Content: ")]
         public string Content { get; set; }
 
         [DataType(DataType.Date)]
@@ -42,7 +45,7 @@ namespace Blog23.Models
 
         //Navigation Properties
         public virtual Blog Blog { get; set; }
-        [Display(Name = "Author")]        
+        [Display(Name = "Author: ")]        
         public virtual BlogUser BlogUser { get; set; }
         public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
         public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();

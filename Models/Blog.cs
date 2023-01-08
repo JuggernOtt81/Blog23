@@ -12,10 +12,12 @@ namespace Blog23.Models
         
         [Required]
         [StringLength(100, ErrorMessage ="The {0} of the blog must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
+        [Display(Name = "Blog Name: ")]
         public string Name { get; set; }
         
         [Required]
         [StringLength(500, ErrorMessage = "The {0} of the blog must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
+        [Display(Name = "Description: ")]
         public string Description { get; set; }
 
         [DataType(DataType.Date)]
@@ -36,7 +38,7 @@ namespace Blog23.Models
         public IFormFile Image { get; set; }
 
         //Navigation Properties
-        [Display(Name = "Author")]    
+        [Display(Name = "Author: ")]    
         public virtual BlogUser BlogUser { get; set; }
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
     }

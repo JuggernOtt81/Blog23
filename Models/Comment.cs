@@ -13,7 +13,7 @@ namespace Blog23.Models
 
         [Required]
         [StringLength(500, ErrorMessage = "The {0} of the comment must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
-        [Display(Name = "Comment")]
+        [Display(Name = "Comment: ")]
         public string Body { get; set; }
 
         [DataType(DataType.Date)]
@@ -40,7 +40,7 @@ namespace Blog23.Models
 
         //Navigation Properties
         public virtual Post Post { get; set; }
-        [Display(Name = "Author")]        
+        [Display(Name = "Author: ")]        
         public virtual BlogUser BlogUser { get; set; }
         public virtual BlogUser Moderator { get; set; }
     }
