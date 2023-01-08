@@ -7,7 +7,7 @@ namespace Blog23.Models
     {
         public int Id { get; set; }
         public string PostId { get; set; }
-        public string AuthorId { get; set; }
+        public string BlogUserId { get; set; }
 
         [Required]
         [StringLength(25, ErrorMessage = "The {0} of the tag must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
@@ -15,6 +15,6 @@ namespace Blog23.Models
 
         //Navigation Properties
         public virtual Post Post { get; set; }
-        public virtual BlogUser Author { get; set; }
+        public virtual BlogUser BlogUser { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Blog23.Models
     {
         public int Id { get; set; }
         
-        public string AuthorId { get; set; }
+        public string BlogUserId { get; set; }
         
         [Required]
         [StringLength(100, ErrorMessage ="The {0} of the blog must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
@@ -36,7 +36,7 @@ namespace Blog23.Models
         public IFormFile Image { get; set; }
 
         //Navigation Properties
-        public virtual BlogUser Author { get; set; }
+        public virtual BlogUser BlogUser { get; set; }
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
     }
 }
