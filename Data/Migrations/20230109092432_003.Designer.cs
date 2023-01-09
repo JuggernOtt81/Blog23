@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Blog23.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230109011857_001")]
-    partial class _001
+    [Migration("20230109092432_003")]
+    partial class _003
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,7 +78,6 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ContentType")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
@@ -89,7 +88,6 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("FacebookUrl")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
@@ -104,7 +102,6 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<byte[]>("ImageData")
-                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("LastName")
@@ -139,7 +136,6 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("TwitterUrl")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
@@ -171,7 +167,6 @@ namespace Blog23.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BlogUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Body")
@@ -179,7 +174,7 @@ namespace Blog23.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime?>("Created")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("Deleted")
@@ -189,15 +184,13 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ModeratedBody")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("ModerationType")
+                    b.Property<int?>("ModerationType")
                         .HasColumnType("integer");
 
                     b.Property<string>("ModeratorId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("PostId")
@@ -234,7 +227,6 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("BlogUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Content")
@@ -242,21 +234,18 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ContentType")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<byte[]>("ImageData")
-                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<int>("ReadyStatus")
                         .HasColumnType("integer");
 
                     b.Property<string>("Slug")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Title")
@@ -285,7 +274,6 @@ namespace Blog23.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BlogUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("PostId")
@@ -450,15 +438,11 @@ namespace Blog23.Data.Migrations
                 {
                     b.HasOne("Blog23.Models.BlogUser", "BlogUser")
                         .WithMany()
-                        .HasForeignKey("BlogUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BlogUserId");
 
                     b.HasOne("Blog23.Models.BlogUser", "Moderator")
                         .WithMany()
-                        .HasForeignKey("ModeratorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ModeratorId");
 
                     b.HasOne("Blog23.Models.Post", "Post")
                         .WithMany("Comments")
@@ -483,9 +467,7 @@ namespace Blog23.Data.Migrations
 
                     b.HasOne("Blog23.Models.BlogUser", "BlogUser")
                         .WithMany("Posts")
-                        .HasForeignKey("BlogUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BlogUserId");
 
                     b.Navigation("Blog");
 
@@ -496,9 +478,7 @@ namespace Blog23.Data.Migrations
                 {
                     b.HasOne("Blog23.Models.BlogUser", "BlogUser")
                         .WithMany()
-                        .HasForeignKey("BlogUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BlogUserId");
 
                     b.HasOne("Blog23.Models.Post", "Post")
                         .WithMany("Tags")

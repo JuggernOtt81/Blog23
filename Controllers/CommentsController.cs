@@ -65,6 +65,8 @@ namespace Blog23.Controllers
         {
             if (ModelState.IsValid)
             {
+                comment.Created = DateTime.Now.ToUniversalTime();
+
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -108,6 +110,7 @@ namespace Blog23.Controllers
 
             if (ModelState.IsValid)
             {
+                comment.Updated = DateTime.Now.ToUniversalTime();
                 try
                 {
                     _context.Update(comment);
