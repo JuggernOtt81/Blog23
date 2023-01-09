@@ -31,11 +31,9 @@ namespace Blog23.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BlogUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ContentType")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
@@ -47,7 +45,6 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<byte[]>("ImageData")
-                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("Name")
@@ -441,9 +438,7 @@ namespace Blog23.Data.Migrations
                 {
                     b.HasOne("Blog23.Models.BlogUser", "BlogUser")
                         .WithMany("Blogs")
-                        .HasForeignKey("BlogUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BlogUserId");
 
                     b.Navigation("BlogUser");
                 });
