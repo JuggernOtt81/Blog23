@@ -20,31 +20,25 @@ namespace Blog23.Controllers
         }
 
         // GET: Comments
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var applicationDbContext = _context.Comments.Include(c => c.BlogUser).Include(c => c.Moderator).Include(c => c.Post);
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
+
+
+        //original comments
+        public async Task<IActionResult> OriginalIndex()
         {
-            var applicationDbContext = _context.Comments.Include(c => c.BlogUser).Include(c => c.Moderator).Include(c => c.Post);
-            return View(await applicationDbContext.ToListAsync());
+            var originalComments = await _context.Comments.ToListAsync();
+            return View("Index", originalComments);
         }
 
-        // GET: Comments/Details/5
-        public async Task<IActionResult> Details(int? id)
+        //moderated comments
+        public async Task<IActionResult> ModeratedIndex()
         {
-            if (id == null || _context.Comments == null)
-            {
-                return NotFound();
-            }
-
-            var comment = await _context.Comments
-                .Include(c => c.BlogUser)
-                .Include(c => c.Moderator)
-                .Include(c => c.Post)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-
-            return View(comment);
+            var moderatedComments = await _context.Comments.Where(c => c.Moderated != null).ToListAsync();
+            return View("Index", moderatedComments);
         }
 
         // GET: Comments/Create
@@ -61,7 +55,7 @@ namespace Blog23.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PostId,BlogUserId,ModeratorId,Body,Created,Updated,Moderated,Deleted,ModeratedBody,ModerationType")] Comment comment)
+        public async Task<IActionResult> Create([Bind("Body")] Comment comment)
         {
             if (ModelState.IsValid)
             {

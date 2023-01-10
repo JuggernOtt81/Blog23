@@ -33,9 +33,9 @@ namespace Blog23.Models
         public DateTime? Deleted { get; set; }
         
         [StringLength(500, ErrorMessage = "The {0} of the comment must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
-        [Display(Name = "Moderated Comment")]
+        [Display(Name = "Moderated Comment: ")]
         public string? ModeratedBody { get; set; }
-
+        [Display(Name ="Reason for moderation: ")]
         public ModerationType? ModerationType { get; set; }
 
         //Navigation Properties
