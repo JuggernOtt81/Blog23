@@ -9,6 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="img\about-bg.jpg" />
+    <Content Include="img\contact-bg.jpg" />
+    <Content Include="img\home-bg.jpg" />
+    <Content Include="img\post-bg.jpg" />
+    <Content Include="img\post-sample-image.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2" />
