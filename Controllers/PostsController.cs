@@ -65,6 +65,16 @@ namespace Blog23.Controllers
             {
                 post.Created= DateTime.Now.ToUniversalTime();
 
+                //foreach (var tag in TagValues)
+                //{
+                //    _context.Tags.Add(new Tag()
+                //    {
+                //        PostId = post.Id,
+                //        AuthorId = authorId,
+                //        Text = tag
+                //    });
+                //}
+
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
