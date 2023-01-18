@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blog23.Data
+  namespace Blog23.Data
 {
     public class ApplicationDbContext : IdentityDbContext<BlogUser>
     {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Blog23.Data;
 using Blog23.Models;
 
-namespace Blog23.Controllers
+  namespace Blog23.Controllers
 {
     public class BlogsController : Controller
     {

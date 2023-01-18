@@ -77,7 +77,7 @@
             @Html.DisplayFor(model => model.BlogUser.Id)
         </dd>
     </dl>
-</div>
+</div>  
 
 <form asp-controller="Comments" asp-action="Create">
     <label asp-for="Comments" class="control-label"></label>
@@ -88,4 +88,4 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
-</div>
+</div>  

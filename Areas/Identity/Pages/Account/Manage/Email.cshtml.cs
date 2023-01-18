@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace Blog23.Areas.Identity.Pages.Account.Manage
+  namespace Blog23.Areas.Identity.Pages.Account.Manage
 {
     public class EmailModel : PageModel
     {

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace Blog23.Models
+  namespace Blog23.Models
 {
     public class BlogUser : IdentityUser
     {

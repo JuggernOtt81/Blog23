@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Blog23.Models
+  namespace Blog23.Models
 {
     public class Blog
     {

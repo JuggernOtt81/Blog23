@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace Blog23.Models
+  namespace Blog23.Models
 {
     public class Comment
     {

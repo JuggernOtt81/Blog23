@@ -1,4 +1,4 @@
-﻿namespace Blog23.Enums
+﻿  namespace Blog23.Enums
 {
     public enum ReadyStatus
     {
