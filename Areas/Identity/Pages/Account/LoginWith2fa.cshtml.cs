@@ -13,7 +13,7 @@ using Blog23.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-  namespace Blog23.Areas.Identity.Pages.Account
+namespace Blog23.Areas.Identity.Pages.Account
 {
     public class LoginWith2faModel : PageModel
     {

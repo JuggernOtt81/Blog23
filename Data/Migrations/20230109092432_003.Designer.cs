@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-  namespace Blog23.Data.Migrations
+namespace Blog23.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230109092432_003")]
