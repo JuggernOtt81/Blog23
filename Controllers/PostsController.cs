@@ -179,6 +179,27 @@ namespace Blog23.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Body")] Comment comment, int postId, string blogUserId)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        comment.Created = DateTime.Now.ToUniversalTime();
+        //        comment.PostId = postId;
+        //        comment.BlogUserId = blogUserId;
+        //        comment.Body = comment.Body;
+        //        _context.Add(comment);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
+        //    ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
+        //    ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", comment.PostId);
+        //    return View(comment);
+        //}
+
+
         private bool PostExists(int id)
         {
           return (_context.Posts?.Any(e => e.Id == id)).GetValueOrDefault();

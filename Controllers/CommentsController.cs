@@ -50,26 +50,45 @@ namespace Blog23.Controllers
             return View();
         }
 
-        // POST: Comments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Create(Comment comment, int postId, string blogUserId, string body)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        comment.PostId = postId;
+        //        comment.BlogUserId = blogUserId;
+        //        comment.Body = body;
+        //        _context.Add(comment);
+        //        _context.SaveChanges();
+        //        return RedirectToAction("Details", new { id = postId });
+        //    }
+        //    return View(comment);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Body")] Comment comment)
+        public async Task<IActionResult> Create([Bind("Body")] Comment comment, int postId, string blogUserId)
         {
             if (ModelState.IsValid)
             {
                 comment.Created = DateTime.Now.ToUniversalTime();
-
+                comment.PostId = postId;
+                comment.BlogUserId = blogUserId;
+                comment.Body = comment.Body;
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                //return RedirectToAction(Details, new { id = postId });
+                return RedirectToAction("Delete", "Posts", new { id = postId });
+                //ok so what's going on here is after submitting a comment, instead of going to the commanded page, it goes to the create page and says certain fields are required. so i am thinking (as tired as i am) that when i come back to this, what i'll need to do is find out where and how i'm missing the connection to i guess "EDIT" the post by injecting a comment record? but that doesn't make sense as the coments are their own class and should be accepting them but the db is not recording them at all. 
             }
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
             ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
             ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", comment.PostId);
             return View(comment);
         }
+
 
         // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(int? id)

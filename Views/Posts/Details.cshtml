@@ -2,10 +2,10 @@
 
 @{
     ViewData["Title"] = "Details";
+    var newComment = new Comment();
 }
 
 <h1>@ViewData["Title"]</h1>
-
 <div>
     <h4>Post</h4>
     <hr />
@@ -78,12 +78,9 @@
         </dd>
     </dl>
 </div>
-
-<form asp-controller="Comments" asp-action="Create">
-    <label asp-for="Comments" class="control-label"></label>
-    <textarea asp-for="Comments" class="form-control"></textarea>
-    <span asp-validation-for="Comments" class="text-danger"></span>
-</form>
+<div>
+    @Html.Partial("_NewComment", newComment)
+</div>
 
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
