@@ -20,4 +20,3 @@ namespace Blog23.Models
         public virtual BlogUser? BlogUser { get; set; }
     }
 }
-//.

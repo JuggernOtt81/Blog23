@@ -43,4 +43,3 @@ namespace Blog23.Models
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
     }
 }
-//.

@@ -45,4 +45,3 @@ namespace Blog23.Models
         public virtual BlogUser? Moderator { get; set; }
     }
 }
-//.
