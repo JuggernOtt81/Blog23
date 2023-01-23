@@ -5326,7 +5326,7 @@
   };
   const Default$3 = {
     animation: true,
-    template: '<div class="tooltip" role="tooltip">' + '<div class="tooltip-arrow"></div>  @*.*@' + '<div class="tooltip-inner"></div>  @*.*@' + '</div>  @*.*@',
+    template: '<div class="tooltip" role="tooltip">' + '<div class="tooltip-arrow"></div>' + '<div class="tooltip-inner"></div>' + '</div>',
     trigger: 'hover focus',
     title: '',
     delay: 0,
@@ -6001,7 +6001,7 @@
     offset: [0, 8],
     trigger: 'click',
     content: '',
-    template: '<div class="popover" role="tooltip">' + '<div class="popover-arrow"></div>  @*.*@' + '<h3 class="popover-header"></h3>' + '<div class="popover-body"></div>  @*.*@' + '</div>  @*.*@'
+    template: '<div class="popover" role="tooltip">' + '<div class="popover-arrow"></div>' + '<h3 class="popover-header"></h3>' + '<div class="popover-body"></div>' + '</div>'
   };
   const DefaultType$2 = { ...Tooltip.DefaultType,
     content: '(string|element|function)'

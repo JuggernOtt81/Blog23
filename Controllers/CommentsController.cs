@@ -61,13 +61,22 @@ namespace Blog23.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PostId,BlogUserId,ModeratorId,Body,Created,Updated,Moderated,Deleted,ModeratedBody,ModerationType")] Comment comment)
+        public async Task<IActionResult> Create([Bind("Id,PostId,Body")] Comment comment)
         {
             if (ModelState.IsValid)
             {
                 comment.Created = DateTime.Now.ToUniversalTime();
-
+                comment.Updated = DateTime.Now.ToUniversalTime();
+                comment.Moderated = DateTime.Now.ToUniversalTime();
+                comment.Deleted = DateTime.Now.ToUniversalTime();
+                comment.Body = comment.Body;
+                comment.ModeratedBody = comment.ModeratedBody;
+                comment.ModerationType = comment.ModerationType;
+                comment.BlogUserId = comment.BlogUserId;
+                comment.ModeratorId = comment.ModeratorId;
+                comment.PostId = 1;
                 _context.Add(comment);
+                _context.SaveChanges();
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

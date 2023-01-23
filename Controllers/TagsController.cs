@@ -59,10 +59,13 @@ namespace Blog23.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PostId,BlogUserId,Text")] Tag tag)
+        public async Task<IActionResult> Create([Bind("Id,PostId,Text")] Tag tag)
         {
             if (ModelState.IsValid)
             {
+                tag.Text = tag.Text.ToLower();
+                tag.PostId = 1;
+                tag.Post = _context.Posts.FirstOrDefault(p => p.Id == tag.PostId);
                 _context.Add(tag);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
