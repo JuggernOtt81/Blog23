@@ -65,16 +65,6 @@ namespace Blog23.Controllers
             {
                 post.Created= DateTime.Now.ToUniversalTime();
 
-                //foreach (var tag in TagValues)
-                //{
-                //    _context.Tags.Add(new Tag()
-                //    {
-                //        PostId = post.Id,
-                //        AuthorId = authorId,
-                //        Text = tag
-                //    });
-                //}
-
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,7 +86,7 @@ namespace Blog23.Controllers
             {
                 return NotFound();
             }
-            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
+            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
             return View(post);
         }
@@ -106,7 +96,7 @@ namespace Blog23.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,BlogUserId,Title,Abstract,Content,Created,Updated,ReadyStatus,Slug,ImageData,ContentType")] Post post)
         {
             if (id != post.Id)
             {
@@ -116,7 +106,6 @@ namespace Blog23.Controllers
             if (ModelState.IsValid)
             {
                 post.Updated= DateTime.Now.ToUniversalTime();
-                
                 try
                 {
                     _context.Update(post);
@@ -135,7 +124,7 @@ namespace Blog23.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
+            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
             return View(post);
         }
@@ -179,30 +168,10 @@ namespace Blog23.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Body")] Comment comment, int postId, string blogUserId)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        comment.Created = DateTime.Now.ToUniversalTime();
-        //        comment.PostId = postId;
-        //        comment.BlogUserId = blogUserId;
-        //        comment.Body = comment.Body;
-        //        _context.Add(comment);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
-        //    ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
-        //    ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", comment.PostId);
-        //    return View(comment);
-        //}
-
-
         private bool PostExists(int id)
         {
           return (_context.Posts?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
+//.

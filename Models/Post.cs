@@ -52,3 +52,4 @@ namespace Blog23.Models
         public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
     }
 }
+//.
