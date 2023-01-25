@@ -35,9 +35,13 @@ namespace Blog23.Controllers
             }
 
             var post = await _context.Posts
-                .Include(p => p.Blog)
-                .Include(p => p.BlogUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(p => p.Blog)
+            .Include(p => p.BlogUser)
+            .FirstOrDefaultAsync(m => m.Id == id);
+            ViewData["PostId"] = post.Id;
+            ViewData["Title"] = post.Title;
+            ViewData["Content"] = post.Content;
+
             if (post == null)
             {
                 return NotFound();
@@ -64,7 +68,13 @@ namespace Blog23.Controllers
             if (ModelState.IsValid)
             {
                 post.Created= DateTime.Now.ToUniversalTime();
-
+                post.BlogId = post.BlogId;
+                //post.BlogUserId = post.BlogUserId;
+                post.Title = post.Title;
+                post.Abstract = post.Abstract;
+                post.Content = post.Content;
+                post.ReadyStatus = post.ReadyStatus;
+                post.Image = post.Image;
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog23.Data;
 using Blog23.Models;
+using Blog23.ViewModels;
 
 namespace Blog23.Controllers
 {
@@ -19,8 +20,22 @@ namespace Blog23.Controllers
             _context = context;
         }
 
-        // GET: Comments
+        // GET: ALL ORIGINAL Comments
         public async Task<IActionResult> Index()
+        {
+            var applicationDbContext = _context.Comments.Include(c => c.BlogUser).Include(c => c.Moderator).Include(c => c.Post);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        //GET: MODERATED Comments
+        public async Task<IActionResult> ModeratedIndex()
+        {
+            var applicationDbContext = _context.Comments.Include(c => c.BlogUser).Include(c => c.Moderator).Include(c => c.Post);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        //GET: DELETED Comments
+        public async Task<IActionResult> DeletedIndex()
         {
             var applicationDbContext = _context.Comments.Include(c => c.BlogUser).Include(c => c.Moderator).Include(c => c.Post);
             return View(await applicationDbContext.ToListAsync());
@@ -61,29 +76,48 @@ namespace Blog23.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PostId,Body")] Comment comment)
+        //public async Task<IActionResult> Create([Bind("PostId", "BlogUserId", "Body")] Comment comment)
+        public async Task<IActionResult> Create(CommentViewModel commentViewModel)
         {
             if (ModelState.IsValid)
             {
-                comment.Created = DateTime.Now.ToUniversalTime();
-                comment.Updated = DateTime.Now.ToUniversalTime();
-                comment.Moderated = DateTime.Now.ToUniversalTime();
-                comment.Deleted = DateTime.Now.ToUniversalTime();
-                comment.Body = comment.Body;
-                comment.ModeratedBody = comment.ModeratedBody;
-                comment.ModerationType = comment.ModerationType;
-                comment.BlogUserId = comment.BlogUserId;
-                comment.ModeratorId = comment.ModeratorId;
-                comment.PostId = 1;
+                var comment = new Comment
+                {
+                    PostId = commentViewModel.PostId,
+                    BlogUserId = commentViewModel.BlogUserId,
+                    Body = commentViewModel.Body
+                };
+                // Add the new Comment object to the database
                 _context.Add(comment);
-                _context.SaveChanges();
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Redirect to the post details page
+                return RedirectToAction("Details", "Posts", new { id = commentViewModel.PostId });
             }
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
-            ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", comment.PostId);
-            return View(comment);
+            else
+            {
+                throw new Exception("The ModelState is NOT valid. Make sure all the properties are accounted for.");
+            }
+            //if (ModelState.IsValid)
+            //{
+            //    comment.Created = DateTime.Now.ToUniversalTime();
+            //    //comment.Updated = DateTime.Now.ToUniversalTime();
+            //    //comment.Moderated = DateTime.Now.ToUniversalTime();
+            //    //comment.Deleted = DateTime.Now.ToUniversalTime();
+            //    comment.Body = comment.Body;
+            //    //comment.ModeratedBody = comment.ModeratedBody;
+            //    //comment.ModerationType = comment.ModerationType;
+            //    //comment.BlogUserId = comment.BlogUserId;
+            //    //comment.ModeratorId = comment.ModeratorId;
+            //    comment.PostId = comment.PostId;
+            //    _context.Add(comment);
+            //    _context.SaveChanges();
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
+            //ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
+            //ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", comment.PostId);
+            //return View(comment);
         }
 
         // GET: Comments/Edit/5
