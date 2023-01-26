@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog23.Data;
 using Blog23.Models;
-using Blog23.ViewModels;
+//using Blog23.ViewModels;
 
 namespace Blog23.Controllers
 {
@@ -77,21 +77,21 @@ namespace Blog23.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("PostId", "BlogUserId", "Body")] Comment comment)
-        public async Task<IActionResult> Create(CommentViewModel commentViewModel)
+        public async Task<IActionResult> Create(Comment comment)
         {
             if (ModelState.IsValid)
             {
-                var comment = new Comment
-                {
-                    PostId = commentViewModel.PostId,
-                    BlogUserId = commentViewModel.BlogUserId,
-                    Body = commentViewModel.Body
-                };
+                //var comment = new Comment
+                //{
+                //    PostId = commentViewModel.PostId,
+                //    BlogUserId = commentViewModel.BlogUserId,
+                //    Body = commentViewModel.Body
+                //};
                 // Add the new Comment object to the database
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 // Redirect to the post details page
-                return RedirectToAction("Details", "Posts", new { id = commentViewModel.PostId });
+                return RedirectToAction(nameof(Index));
             }
             else
             {

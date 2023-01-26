@@ -116,68 +116,6 @@
     <input type="submit" value="Create" class="btn btn-primary" />
 </form>
 
-
-
-@*<form asp-controller="Comments" asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" name="PostId" value="@ViewData["PostId"]" />
-    <input type="hidden" asp-for="BlogUserId" name="blogUserId" value="@User.Identity.Name" />
-    <textarea name="Body" class="form-control"></textarea>
-    <span asp-validation-for="Body" class="text-danger"></span>
-    <input type="submit" value="Create" class="btn btn-primary" />
-</form>*@
-
-
-@*<form asp-controller="Comments" asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="PostId" value="@Model.Id" />
-    <input type="hidden" asp-for="BlogUserId" name="blogUserId" value="@User.Identity.Name" />
-    <textarea asp-for="CommentBody" class="form-control"></textarea>
-    <span asp-validation-for="CommentBody" class="text-danger"></span>
-    <input type="submit" value="Create" class="btn btn-primary" />
-</form>
-*@
-
-@*<form asp-controller="Comments" asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="PostId" value="@Model.Id" />
-    <input type="hidden" asp-for="BlogUserId" name="blogUserId" value="@User.Identity.Name" />
-    <textarea asp-for="Body" class="form-control"></textarea>
-    <span asp-validation-for="Body" class="text-danger"></span>
-    <input type="submit" value="Create" class="btn btn-primary" />
-</form>*@
-
-
-@*<form asp-controller="Comments" asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="PostId" value="@Model.Id" />
-    <input type="hidden" asp-for="BlogUserId" name="blogUserId" value="@User.Identity.Name" />
-    <textarea asp-for="Body" class="form-control"></textarea>
-    <span asp-validation-for="Body" class="text-danger"></span>
-    <input type="submit" value="Create" class="btn btn-primary" />
-</form>*@
-
-
-@*<form asp-controller="Comments" asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="PostId" value="@Model.Post.Id" />
-    <input type="hidden" asp-for="BlogUserId" name="blogUserId" value="@User.Identity.Name" />
-    <textarea asp-for="Body" class="form-control"></textarea>
-    <span asp-validation-for="Body" class="text-danger"></span>
-    <input type="submit" value="Create" class="btn btn-primary" />
-</form>*@
-
-
-@*<form asp-controller="Comments" asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" value="@Model.Post.Id" />
-    <input type="hidden" asp-for="BlogUserId" name="blogUserId" value="@User.Identity.Name" />
-    <textarea asp-for="Body" class="form-control"></textarea>
-    <span asp-validation-for="Body" class="text-danger"></span>
-    <input type="submit" value="Create" class="btn btn-primary" />
-</form>*@
-
-
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
