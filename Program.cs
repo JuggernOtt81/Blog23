@@ -1,5 +1,6 @@
 using Blog23.Data;
 using Blog23.Models;
+using Blog23.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,11 +16,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//DELETE the previsou version of this (AddDefaultIdentity) and add (AddDefaultUI) to this:
+//DELETE the previous version of this (AddDefaultIdentity) and add (AddDefaultUI) to this:
 builder.Services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddDefaultUI()
+    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ImageService>();
+builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<DataService>();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
