@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="img\about-bg.jpg" />
-    <Content Include="img\contact-bg.jpg" />
-    <Content Include="img\home-bg.jpg" />
-    <Content Include="img\post-bg.jpg" />
-    <Content Include="img\post-sample-image.jpg" />
+    <None Include="wwwroot\img\about-bg.jpg" />
+    <None Include="wwwroot\img\contact-bg.jpg" />
+    <None Include="wwwroot\img\home-bg.jpg" />
+    <None Include="wwwroot\img\post-bg.jpg" />
+    <None Include="wwwroot\img\post-sample-image.jpg" />
   </ItemGroup>
 
   <ItemGroup>
