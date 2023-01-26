@@ -2,6 +2,11 @@
 using Blog23.Models;
 using Blog23.Enums;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Blog23.Services
 {
@@ -58,6 +63,7 @@ namespace Blog23.Services
                 UserName = "JuggernOtt81",
                 FirstName = "Lawson",
                 LastName = "Ott",
+                Handle = "JuggernOtt81",
                 EmailConfirmed = true,
             };
 
@@ -74,6 +80,7 @@ namespace Blog23.Services
                 UserName = "lawsonott3",
                 FirstName = "Lawson",
                 LastName = "Ott",
+                Handle = "lawsonott3",
                 EmailConfirmed = true,
             };
             await _userManager.CreateAsync(moderatorUser, "Abc&123!");
