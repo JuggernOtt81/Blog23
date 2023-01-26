@@ -1,9 +1,8 @@
 ﻿namespace Blog23.ViewModels
 {
-    public class PostCommentViewModel
+    public class PostCommentViewModel : Models.Comment
     {
-        public int PostId { get; set; }
-        public string? CommentBody { get; set; }
+        public string? Body { get; set; }
     }
 
 

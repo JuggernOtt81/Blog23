@@ -5,7 +5,29 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <h2 class="section-heading">a section heading</h2>
+                <p>Lorem Ipsum 1</p>
+                <p>Lorem Ipsum 2</p>
+                <p>Lorem Ipsum 3</p>
+                <blockquote class="blockquote">a block quote</blockquote>
+                <a href="#!"><img class="img-fluid" src="" alt="Some Image" />SomeImage</a>                
+                <p>Lorem Ipsum 4</p>
+                <p>Lorem Ipsum 5</p>
+                <span class="caption text-muted">final thought or something</span>
+                <p>
+                    Placeholder text by
+                    <a href="#">some link</a>
+                    &middot; Images by
+                    <a href="#">attribution to image source</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</article>
 <div>
     <h4>Post</h4>
     <hr />
@@ -87,7 +109,7 @@
 <form asp-controller="Comments" asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Id" value="@Model.Id" />
-    <textarea asp-for="Content" class="form-control"></textarea>
+    @*<textarea asp-for="Body" class="form-control"></textarea>*@
     <span asp-validation-for="Content" class="text-danger"></span>
     <input type="submit" value="Create" class="btn btn-primary" />
 </form>
