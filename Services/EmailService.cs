@@ -1,13 +1,15 @@
-﻿using Blog23.Models;
+﻿using Blog23.ViewModels;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using Blog23.Services;
+using Blog23.Services.Interfaces;
 
 namespace Blog23.Services
 {
-    public class EmailService : IEmailSender
+    public class EmailService : IBlogEmailSender
     {
         private readonly MailSettings _mailSettings;
 
@@ -16,37 +18,41 @@ namespace Blog23.Services
             _mailSettings = mailSettings.Value;
         }
 
+        public Task SendContactEmailAsync(string emailFrom, string name, string subject, string htmlMessage)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            //they say the left side is dev machine only and righ machine is for servers - but heroku sends emails before adding
-            // ?? Environment.GetEnvironmentVariable("Email")
-            //so, wtf?
             var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
 
-            MimeMessage newEmail = new();
+            MimeMessage newEmail = new()
+            {
+                Sender = MailboxAddress.Parse(emailSender)
+            };
 
-            newEmail.Sender = MailboxAddress.Parse(emailSender);
-
-            foreach(var emailAddress in email.Split(";"))
+            foreach (var emailAddress in email.Split(";"))
             {
                 newEmail.To.Add(MailboxAddress.Parse(emailAddress));
             }
 
             newEmail.Subject = subject;
 
-            BodyBuilder emailBody = new();
-            emailBody.HtmlBody = htmlMessage;
+            BodyBuilder emailBody = new()
+            {
+                HtmlBody = htmlMessage
+            };
 
             newEmail.Body = emailBody.ToMessageBody();
 
-            //should probably log in...
             using SmtpClient smtpClient = new();
 
             try
             {
-                var host = _mailSettings.MailHost ?? Environment.GetEnvironmentVariable("MailHost");
-                var port = _mailSettings.MailPort != 0 ? _mailSettings.MailPort : int.Parse(Environment.GetEnvironmentVariable("MailPort")!);
-                var password = _mailSettings.MailPassword ?? Environment.GetEnvironmentVariable("MailPassword");
+                var host = _mailSettings.Host ?? Environment.GetEnvironmentVariable("Host");
+                var port = _mailSettings.Port != 0 ? _mailSettings.Port : int.Parse(Environment.GetEnvironmentVariable("Port")!);
+                var password = _mailSettings.Password ?? Environment.GetEnvironmentVariable("Password");
 
                 await smtpClient.ConnectAsync(host, port, SecureSocketOptions.StartTls);
                 await smtpClient.AuthenticateAsync(emailSender,password);

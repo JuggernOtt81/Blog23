@@ -1,6 +1,8 @@
 using Blog23.Data;
 using Blog23.Models;
 using Blog23.Services;
+using Blog23.Services.Interfaces;
+using Blog23.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc;
-using Blog23.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 //localhost db
@@ -29,10 +30,11 @@ builder.Services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.R
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<DataService>();
-//builder.Services.AddScoped<BlogSearchService>();
-//builder.Services.AddScoped<IBlogEmailSender, EmailService>();
-//builder.Services.AddScoped<IImageService, BasicImageService>();
-//builder.Services.AddScoped<ISlugService, BasicSlugService>();
+builder.Services.AddScoped<BlogSearchService>();
+builder.Services.AddScoped<IBlogEmailSender, EmailService>();
+builder.Services.AddScoped<MailSettings>();
+builder.Services.AddScoped<IImageService, BasicImageService>();
+builder.Services.AddScoped<ISlugService, BasicSlugService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -44,6 +46,11 @@ var dataService = app.Services
                      .GetRequiredService<DataService>();
 
 await dataService.ManageDataAsync();
+
+var mailSettings = app.Services
+                     .CreateScope()
+                     .ServiceProvider
+                     .GetRequiredService<MailSettings>();
 
 if (app.Environment.IsDevelopment())
 {
@@ -69,7 +76,3 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
-
-
-
-//builder.Services.AddScoped<ApplicationDbContext>();
