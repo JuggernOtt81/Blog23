@@ -16,6 +16,7 @@ namespace Blog23.Services
         public EmailService(IOptions<MailSettings> mailSettings)
         {
             _mailSettings = mailSettings.Value;
+            //_mailSettings = (MailSettings?)mailSettings;
         }
 
         public Task SendContactEmailAsync(string emailFrom, string name, string subject, string htmlMessage)

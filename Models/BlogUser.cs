@@ -7,15 +7,15 @@ namespace Blog23.Models
 {
     public class BlogUser : IdentityUser
     {
-        [Required]
+        //[Required]
         [StringLength(50, ErrorMessage = "The {0} of the blog user must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
         [Display(Name = "First Name")]
         public string? FirstName { get; set; }
-        [Required]
+        //[Required]
         [StringLength(50, ErrorMessage = "The {0} of the blog user must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
         [Display(Name = "Last Name")]
         public string? LastName { get; set; }
-        [Required]
+        //[Required]
         [StringLength(50, ErrorMessage = "The {0} of the blog user must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
         [Display(Name = "UserName / Handle / Moniker / Alias")]
         public string? DisplayName { get; set; }

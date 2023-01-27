@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Blog23.Data.Migrations
+namespace Blog23.Data.migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -78,7 +78,6 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("DisplayName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -94,7 +93,6 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -102,7 +100,6 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("bytea");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 

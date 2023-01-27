@@ -32,11 +32,14 @@ builder.Services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.R
 builder.Services.AddScoped<DataService>();
 builder.Services.AddScoped<BlogSearchService>();
 builder.Services.AddScoped<IBlogEmailSender, EmailService>();
+//builder.Services.AddScoped(provider => new MailSettings(provider.GetService<IConfiguration>()));
 builder.Services.AddScoped<MailSettings>();
 builder.Services.AddScoped<IImageService, BasicImageService>();
 builder.Services.AddScoped<ISlugService, BasicSlugService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+
 
 var app = builder.Build();
 

@@ -21,12 +21,12 @@ namespace Blog23.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly SignInManager<BlogUser> _signInManager;
-        private readonly IBlogEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
 
         public EmailModel(
             UserManager<BlogUser> userManager,
             SignInManager<BlogUser> signInManager,
-            IBlogEmailSender emailSender)
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
