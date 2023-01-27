@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Blog23.Models;
+using Blog23.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,12 @@ namespace Blog23.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly SignInManager<BlogUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IBlogEmailSender _emailSender;
 
         public EmailModel(
             UserManager<BlogUser> userManager,
             SignInManager<BlogUser> signInManager,
-            IEmailSender emailSender)
+            IBlogEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
