@@ -38,12 +38,13 @@ namespace Blog23.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Contact(ContactMe model)
+        public async Task<IActionResult> ContactAsync(ContactMe model)
         {
             if (ModelState.IsValid)
             {
-                //_emailSender.SendContactEmailAsync(model.Email, model.Name, model.Subject, model.Message);
-                return RedirectToAction("ContactConfirmation");
+                model.Message = $"{model.Message} <hr/> Phone: {model.Phone}";
+                await _emailSender.SendContactEmailAsync(model.Email, model.Name, model.Subject, model.Message);
+                
             }
             return View(model);
         }

@@ -8,5 +8,5 @@ namespace Blog23.Services;
 
 public interface IBlogEmailSender : IEmailSender
 {
-
+    Task SendContactEmailAsync(string? email, string? name, string? subject, string message);
 }

@@ -40,12 +40,13 @@ namespace Blog23.Services
 
             newEmail.Subject = subject;
 
-            BodyBuilder emailBody = new()
-            {
-                HtmlBody = htmlMessage
-            };
-
-            newEmail.Body = emailBody.ToMessageBody();
+            //BodyBuilder emailBody = new()
+            //{
+            //    HtmlBody = htmlMessage
+            //};
+            var builder = new BodyBuilder();
+            //builder.HtmlBody = $"<b>{name}</b> has sent you an email and can be reached at <b>{emailFrom}</b><br><br>{htmlMessage}";
+            newEmail.Body = builder.ToMessageBody();
 
             using SmtpClient smtpClient = new();
 
