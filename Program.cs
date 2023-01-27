@@ -10,29 +10,39 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc;
+using Blog23.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-// add the services and configurations for your application
-
+//localhost db
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
-builder.Services.AddScoped<ApplicationDbContext>();
 
+// Add services to the container.
+
+//production db
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(ConnectionService.GetConnectionString(builder.Configuration)));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 builder.Services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddDefaultUI()
+    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ImageService>();
-builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<DataService>();
+//builder.Services.AddScoped<BlogSearchService>();
+//builder.Services.AddScoped<IBlogEmailSender, EmailService>();
+//builder.Services.AddScoped<IImageService, BasicImageService>();
+//builder.Services.AddScoped<ISlugService, BasicSlugService>();
+builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
-var dataService = app.Services.GetRequiredService<DataService>();
+
+var dataService = app.Services
+                     .CreateScope()
+                     .ServiceProvider
+                     .GetRequiredService<DataService>();
+
 await dataService.ManageDataAsync();
 
 if (app.Environment.IsDevelopment())
@@ -59,3 +69,7 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+
+
+//builder.Services.AddScoped<ApplicationDbContext>();

@@ -18,7 +18,7 @@ namespace Blog23.Models
         [Required]
         [StringLength(50, ErrorMessage = "The {0} of the blog user must be at least {2} and at most {1} characters in length.", MinimumLength = 2)]
         [Display(Name = "UserName / Handle / Moniker / Alias")]
-        public string? Handle { get; set; }
+        public string? DisplayName { get; set; }
 
         //Profile Image
         [Display(Name = "Profile Image: ")]

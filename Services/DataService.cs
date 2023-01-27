@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog23.Services
 {
@@ -25,6 +26,7 @@ namespace Blog23.Services
 
         public async Task ManageDataAsync()
         {
+            await _dbContext.Database.MigrateAsync();
             await SeedRolesAsync();
             await SeedUsersAsync();
         }
@@ -60,10 +62,11 @@ namespace Blog23.Services
             var adminUser = new BlogUser()
             {
                 Email = "juggernott81@gmail.com",
-                UserName = "JuggernOtt81",
+                UserName = "juggernott81@gmail.com",
                 FirstName = "Lawson",
                 LastName = "Ott",
-                Handle = "JuggernOtt81",
+                DisplayName = "JuggernOtt81",
+                PhoneNumber = "(555) 867-5309",
                 EmailConfirmed = true,
             };
 
@@ -77,10 +80,11 @@ namespace Blog23.Services
             var moderatorUser = new BlogUser()
             {
                 Email = "lawsonott3@gmail.com",
-                UserName = "lawsonott3",
+                UserName = "lawsonott3@gmail.com",
                 FirstName = "Lawson",
                 LastName = "Ott",
-                Handle = "lawsonott3",
+                DisplayName = "lawsonott3",
+                PhoneNumber = "(800) 867-5309",
                 EmailConfirmed = true,
             };
             await _userManager.CreateAsync(moderatorUser, "Abc&123!");

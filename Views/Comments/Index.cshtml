@@ -75,10 +75,10 @@
                 @Html.DisplayFor(modelItem => item.Post.Abstract)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BlogUser.Handle)
+                @Html.DisplayFor(modelItem => item.BlogUser.DisplayName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Moderator.Handle)
+                @Html.DisplayFor(modelItem => item.Moderator.DisplayName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

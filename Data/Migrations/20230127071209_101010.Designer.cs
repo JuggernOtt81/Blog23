@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Blog23.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230126123856_99")]
-    partial class _99
+    [Migration("20230127071209_101010")]
+    partial class _101010
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,6 +80,11 @@ namespace Blog23.Data.Migrations
                     b.Property<string>("ContentType")
                         .HasColumnType("text");
 
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -92,11 +97,6 @@ namespace Blog23.Data.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("Handle")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");

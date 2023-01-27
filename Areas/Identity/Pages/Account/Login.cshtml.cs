@@ -15,16 +15,30 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
+using Blog23.Data;
+using Blog23.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Blog23.Helpers;
+using Blog23.Enums;
+
 
 namespace Blog23.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        private readonly UserManager<BlogUser> _userManager;
         private readonly SignInManager<BlogUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<BlogUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<BlogUser> signInManager,
+            ILogger<LoginModel> logger,
+            UserManager<BlogUser> userManager)
         {
+            _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
