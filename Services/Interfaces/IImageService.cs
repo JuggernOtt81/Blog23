@@ -7,7 +7,10 @@ namespace Blog23.Services.Interfaces
 {
     public interface IImageService
     {
-        public Task<byte[]> ConvertFileToByteArrayAsync(IFormFile file);
-        public string ConvertByteArrayToFile(byte[] fileData, string extension);
+        public Task<byte[]> EncodeImageAsync(IFormFile file);
+        public Task<byte[]> EncodeImageAsync(string fileName);
+        string DecodeImage(byte[] data, string type);
+        string ContentType(IFormFile file);
+        int Size(IFormFile file);
     }
 }
