@@ -20,9 +20,11 @@ namespace Blog23.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IImageService _imageService;
         private readonly UserManager<BlogUser> _userManager;
+        private readonly ISlugService _slugService;
 
-        public PostsController(ApplicationDbContext context, IImageService imageService, UserManager<BlogUser> userManager)
+        public PostsController(ApplicationDbContext context, IImageService imageService, UserManager<BlogUser> userManager, ISlugService slugService)
         {
+            _slugService = slugService;
             _userManager = userManager;
             _imageService = imageService;
             _context = context;
@@ -72,10 +74,19 @@ namespace Blog23.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post)
+        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post, List<string> tagValues)
         {
             if (ModelState.IsValid)
             {
+                var slug = _slugService.UrlFriendly(post.Title);
+                if (!_slugService.IsUnique(slug))
+                {
+                    ModelState.AddModelError("Title", "Duplicate title found! The title must be unique.");
+                    ViewData["TagValues"] = string.Join(",", tagValues);
+                    return View(post);
+                }
+                
+                post.Slug = slug;
                 post.Created = DateTime.Now.ToUniversalTime();
                 post.BlogUserId = _userManager.GetUserId(User);
                 _context.Add(post);
