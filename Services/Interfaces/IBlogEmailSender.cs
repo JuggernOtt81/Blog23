@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 
-using Blog23.ViewModels;
-using Blog23.Services;
-using Blog23.Services.Interfaces;
-
-namespace Blog23.Services;
-
-public interface IBlogEmailSender : IEmailSender
+namespace Blog23.Services.Interfaces
 {
-    Task SendContactEmailAsync(string? email, string? name, string? subject, string message);
+    public interface IBlogEmailSender : IEmailSender
+    {
+        Task SendContactEmailAsync(string email, string name, string subject, string message);
+    }
 }

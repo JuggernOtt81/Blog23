@@ -2,7 +2,7 @@ using Blog23.Data;
 using Blog23.Models;
 using Blog23.Services;
 using Blog23.Services.Interfaces;
-using Blog23.ViewModels;
+//using Blog23.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,10 +12,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc;
+using Blog23.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 //localhost db
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var mailsettings = builder.Configuration.GetSection("MailSettings").Get<MailSettings>();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
@@ -31,9 +34,8 @@ builder.Services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.R
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<DataService>();
 builder.Services.AddScoped<BlogSearchService>();
-builder.Services.AddScoped<IBlogEmailSender, EmailService>();
-//builder.Services.AddScoped(provider => new MailSettings(provider.GetService<IConfiguration>()));
 builder.Services.AddScoped<MailSettings>();
+builder.Services.AddScoped<IBlogEmailSender, EmailService>();
 builder.Services.AddScoped<IImageService, BasicImageService>();
 builder.Services.AddScoped<ISlugService, BasicSlugService>();
 builder.Services.AddControllersWithViews();
@@ -42,6 +44,10 @@ builder.Services.AddRazorPages();
 
 
 var app = builder.Build();
+//var mailService = app.Services
+//                     .CreateScope()
+//                     .ServiceProvider
+//                     .GetRequiredService<IBlogEmailSender>();
 
 var dataService = app.Services
                      .CreateScope()
@@ -50,15 +56,7 @@ var dataService = app.Services
 
 await dataService.ManageDataAsync();
 
-var mailService = app.Services
-                     .CreateScope()
-                     .ServiceProvider
-                     .GetRequiredService<IBlogEmailSender>();
 
-//var mailSettings = app.Services
-//                     .CreateScope()
-//                     .ServiceProvider
-//                     .GetRequiredService<MailSettings>();
 
 if (app.Environment.IsDevelopment())
 {
