@@ -8,6 +8,8 @@ using Blog23.Services;
 using MailKit.Security;
 using MimeKit;
 using MailKit.Net.Smtp;
+using Blog23.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Blog23.Controllers
 {
@@ -15,7 +17,9 @@ namespace Blog23.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogEmailSender _emailSender;
-
+        private readonly ApplicationDbContext _context;
+        private readonly IImageService _imageService;
+        private readonly UserManager<BlogUser> _userManager;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;

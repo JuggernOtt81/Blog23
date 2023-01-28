@@ -3,6 +3,8 @@ using System.Text;
 using Blog23.ViewModels;
 using Blog23.Services;
 using Blog23.Services.Interfaces;
+using System.Linq;
+using System.Text;
 
 namespace Blog23.Services;
 
@@ -158,5 +160,4 @@ public class BasicSlugService : ISlugService
             return "";
         }
     }
-
 }

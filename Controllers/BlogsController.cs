@@ -7,15 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog23.Data;
 using Blog23.Models;
+using Blog23.Services.Interfaces;
+using Blog23.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog23.Controllers
 {
     public class BlogsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IImageService _imageService;
+        private readonly UserManager<BlogUser> _userManager;
 
-        public BlogsController(ApplicationDbContext context)
+        public BlogsController(ApplicationDbContext context, IImageService imageService, UserManager<BlogUser> userManager)
         {
+            _userManager = userManager;
+            _imageService = imageService;
             _context = context;
         }
 
@@ -44,7 +52,7 @@ namespace Blog23.Controllers
 
             return View(blog);
         }
-
+        [Authorize]
         // GET: Blogs/Create
         public IActionResult Create()
         {
@@ -52,6 +60,7 @@ namespace Blog23.Controllers
         }
 
         // POST: Blogs/Create
+        
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -61,8 +70,10 @@ namespace Blog23.Controllers
             if (ModelState.IsValid)
             {
                 blog.Created = DateTime.Now.ToUniversalTime();
-
+                blog.BlogUserId = _userManager.GetUserId(User);
                 _context.Add(blog);
+                blog.ImageData = await _imageService.EncodeImageAsync(blog.Image);
+                blog.ContentType = _imageService.ContentType(blog.Image);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

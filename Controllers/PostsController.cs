@@ -7,18 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog23.Data;
 using Blog23.Models;
+using Blog23.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using MailKit;
+using Microsoft.AspNetCore.Authorization;
+using System.Reflection.Metadata;
 
 namespace Blog23.Controllers
 {
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IImageService _imageService;
+        private readonly UserManager<BlogUser> _userManager;
 
-        public PostsController(ApplicationDbContext context)
+        public PostsController(ApplicationDbContext context, IImageService imageService, UserManager<BlogUser> userManager)
         {
+            _userManager = userManager;
+            _imageService = imageService;
             _context = context;
         }
-
+        [Authorize]
         // GET: Posts
         public async Task<IActionResult> Index()
         {
@@ -67,14 +76,16 @@ namespace Blog23.Controllers
         {
             if (ModelState.IsValid)
             {
-                post.Created= DateTime.Now.ToUniversalTime();
+                post.Created = DateTime.Now.ToUniversalTime();
+                post.BlogUserId = _userManager.GetUserId(User);
+                _context.Add(post);
+                post.ImageData = await _imageService.EncodeImageAsync(post.Image);
+                post.ContentType = _imageService.ContentType(post.Image);
                 post.BlogId = post.BlogId;
-                //post.BlogUserId = post.BlogUserId;
                 post.Title = post.Title;
                 post.Abstract = post.Abstract;
                 post.Content = post.Content;
                 post.ReadyStatus = post.ReadyStatus;
-                post.Image = post.Image;
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

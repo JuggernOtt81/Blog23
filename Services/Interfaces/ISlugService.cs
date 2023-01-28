@@ -1,5 +1,4 @@
-﻿
-using Blog23.ViewModels;
+﻿using Blog23.ViewModels;
 using Blog23.Services;
 using Blog23.Services.Interfaces;
 
