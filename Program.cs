@@ -32,7 +32,7 @@ builder.Services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.R
 builder.Services.AddScoped<DataService>();
 builder.Services.AddScoped<BlogSearchService>();
 builder.Services.AddScoped<IBlogEmailSender, EmailService>();
-builder.Services.AddScoped(provider => new MailSettings(provider.GetService<IConfiguration>()));
+//builder.Services.AddScoped(provider => new MailSettings(provider.GetService<IConfiguration>()));
 builder.Services.AddScoped<MailSettings>();
 builder.Services.AddScoped<IImageService, BasicImageService>();
 builder.Services.AddScoped<ISlugService, BasicSlugService>();
@@ -50,10 +50,15 @@ var dataService = app.Services
 
 await dataService.ManageDataAsync();
 
-var mailSettings = app.Services
+var mailService = app.Services
                      .CreateScope()
                      .ServiceProvider
-                     .GetRequiredService<MailSettings>();
+                     .GetRequiredService<IBlogEmailSender>();
+
+//var mailSettings = app.Services
+//                     .CreateScope()
+//                     .ServiceProvider
+//                     .GetRequiredService<MailSettings>();
 
 if (app.Environment.IsDevelopment())
 {

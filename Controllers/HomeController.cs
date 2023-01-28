@@ -48,7 +48,9 @@ namespace Blog23.Controllers
             {
                 model.Message = $"{model.Message} <hr/> Phone: {model.Phone}";
                 await _emailSender.SendContactEmailAsync(model.Email, model.Name, model.Subject, model.Message);
-                
+                return RedirectToAction("Index");
+
+
             }
             return View(model);
         }

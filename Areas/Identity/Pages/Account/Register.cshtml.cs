@@ -31,12 +31,9 @@ namespace Blog23.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly IImageService _imageService;
         private readonly IConfiguration _configuration;
+        private readonly EmailService _emailService;
 
-        public RegisterModel(
-            UserManager<BlogUser> userManager,
-            SignInManager<BlogUser> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender, IImageService imageService, IConfiguration configuration)
+        public RegisterModel(UserManager<BlogUser> userManager, SignInManager<BlogUser> signInManager, ILogger<RegisterModel> logger, IEmailSender emailSender, IImageService imageService, IConfiguration configuration, EmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -44,6 +41,7 @@ namespace Blog23.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _imageService = imageService;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         [BindProperty]
@@ -55,38 +53,40 @@ namespace Blog23.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-
-            [Display(Name = "Given Name")]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
-            public string FirstName { get; set; }
-
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
-            [Display(Name = "Surname")]
-            public string LastName { get; set; }
-
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
+            //email
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+            
+            //username / handle / display name
+            [Required]
+            [Display(Name = "Display Name")]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            public string DisplayName { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
+            //name
+            [Required]
+            [Display(Name = "Given Name")]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [Display(Name = "Surname")]
+            public string LastName { get; set; }
+
+            //profile image
+            //[Display(Name = "Avatar")]
+            //public IFormFile Image { get; set; }
+
+            //password
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
@@ -109,14 +109,9 @@ namespace Blog23.Areas.Identity.Pages.Account
                 {
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    //DisplayName = Input.DisplayName,
+                    DisplayName = Input.DisplayName,
                     UserName = Input.Email,
-                    Email = Input.Email,
-                    //ImageData = (await _imageService.EncodeImageAsync(Input.ImageFile)) ??
-                    //             await _imageService.EncodeImageAsync(_configuration["DefaultUserImage"]),
-                    //ContentType = Input.ImageFile is null ?
-                    //                Path.GetExtension(_configuration["DefaultUserImage"]) :
-                    //                _imageService.ContentType(Input.ImageFile)
+                    Email = Input.Email
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

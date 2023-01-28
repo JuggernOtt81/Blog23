@@ -9,10 +9,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Blog23.Data.migrations
+namespace Blog23.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230127130520_101010")]
+    [Migration("20230128083334_101010")]
     partial class _101010
     {
         /// <inheritdoc />
