@@ -20,8 +20,12 @@ namespace Blog23.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IImageService _imageService;
         private readonly UserManager<BlogUser> _userManager;
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IBlogEmailSender emailSender, ApplicationDbContext context, IImageService imageService, UserManager<BlogUser> userManager)
         {
+            _userManager = userManager;
+            _imageService = imageService;
+            _context = context;
+            _emailSender = emailSender;
             _logger = logger;
         }
 
@@ -47,7 +51,10 @@ namespace Blog23.Controllers
             if (ModelState.IsValid)
             {
                 model.Message = $"{model.Message} <hr/> Phone: {model.Phone}";
-                await _emailSender.SendContactEmailAsync(model.Email, model.Name, model.Subject, model.Message);
+                await _emailSender.SendContactEmailAsync(email: model.Email,
+                                                         name: model.Name,
+                                                         subject: model.Subject,
+                                                         message: model.Message);
                 return RedirectToAction("Index");
 
 
